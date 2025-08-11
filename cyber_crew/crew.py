@@ -34,6 +34,8 @@ class CyberCrew:
 
     agents: list[BaseAgent]
     tasks: list[Task]
+    agents_config: dict
+    tasks_config: dict
 
     # Agents
     @agent
