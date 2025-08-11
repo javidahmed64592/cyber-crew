@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
 from datetime import datetime
 
 from cyber_crew.crew import CyberCrew
@@ -13,56 +12,46 @@ warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
+
 def run():
-    """
-    Run the crew.
-    """
-    inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
-    }
-    
+    """Run the crew."""
+    inputs = {"topic": "AI LLMs", "current_year": str(datetime.now().year)}
+
     try:
         CyberCrew().crew().kickoff(inputs=inputs)
     except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+        msg = f"An error occurred while running the crew: {e}"
+        raise Exception(msg) from e
 
 
 def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
-    }
+    """Train the crew for a given number of iterations."""
+    inputs = {"topic": "AI LLMs", "current_year": str(datetime.now().year)}
     try:
         CyberCrew().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
 
     except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
+        msg = f"An error occurred while training the crew: {e}"
+        raise Exception(msg) from e
+
 
 def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
+    """Replay the crew execution from a specific task."""
     try:
         CyberCrew().crew().replay(task_id=sys.argv[1])
 
     except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
+        msg = f"An error occurred while replaying the crew: {e}"
+        raise Exception(msg) from e
+
 
 def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
-    }
-    
+    """Test the crew execution and returns the results."""
+    inputs = {"topic": "AI LLMs", "current_year": str(datetime.now().year)}
+
     try:
         CyberCrew().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
 
     except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+        msg = f"An error occurred while testing the crew: {e}"
+        raise Exception(msg) from e
