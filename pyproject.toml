@@ -36,11 +36,10 @@ dev = [
 ]
 
 [project.scripts]
-cyber_crew = "cyber_crew.main:run"
-run_crew = "cyber_crew.main:run"
-train = "cyber_crew.main:train"
-replay = "cyber_crew.main:replay"
-test = "cyber_crew.main:test"
+cyber-crew = "cyber_crew.main:run"
+train-crew = "cyber_crew.main:train"
+replay-crew = "cyber_crew.main:replay"
+test-crew = "cyber_crew.main:test"
 
 [tool.crewai]
 type = "crew"
