@@ -57,8 +57,9 @@ def run() -> None:
         logger.exception(msg)
         raise
     finally:
-        logger.info("Closing shell session...")
-        get_shell().close()
+        if shell := get_shell():
+            logger.info("Closing shell session...")
+            shell.close()
         logger.info("Complete!")
 
 
@@ -78,8 +79,9 @@ def train() -> None:
         logger.exception(msg)
         raise
     finally:
-        logger.info("Closing shell session...")
-        get_shell().close()
+        if shell := get_shell():
+            logger.info("Closing shell session...")
+            shell.close()
         logger.info("Complete!")
 
 
@@ -97,8 +99,9 @@ def replay() -> None:
         logger.exception(msg)
         raise
     finally:
-        logger.info("Closing shell session...")
-        get_shell().close()
+        if shell := get_shell():
+            logger.info("Closing shell session...")
+            shell.close()
         logger.info("Complete!")
 
 
@@ -117,6 +120,7 @@ def test() -> None:
         logger.exception(msg)
         raise
     finally:
-        logger.info("Closing shell session...")
-        get_shell().close()
+        if shell := get_shell():
+            logger.info("Closing shell session...")
+            shell.close()
         logger.info("Complete!")
