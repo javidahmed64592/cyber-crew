@@ -57,38 +57,6 @@ def request_command_review(cmd: str) -> str:
     return extract_decision(decision)
 
 
-def generate_mission_outcome_summary(report_writer_agent: Agent) -> None:
-    """Generate a summary of the mission outcomes and send it to the ReportWriterAgent.
-
-    :param Agent report_writer_agent: The ReportWriterAgent instance.
-    """
-    report_task = Task(
-        agent=report_writer_agent,
-        name="Generate Mission Report",
-        expected_output="A Markdown document outlining the mission outcomes. Save it in `mission_report.md`.",
-        description=(
-            "You are a technical documentation specialist responsible for writing a Markdown report that summarizes the"
-            "outcome of a cybersecurity mission.\n"
-            "Your task is to:\n"
-            "1. Ask the ManagerAgent for the following information:\n"
-            "- The original mission prompt\n"
-            "- The flags or answers discovered\n"
-            "- A summary of the crew's approach\n"
-            "- Reasoning behind key decisions\n"
-            "- Any challenges encountered\n"
-            "2. Use that information to generate a Markdown report with the following sections:\n"
-            "- Mission Prompt\n"
-            "- Flags Found\n"
-            "- Approach\n"
-            "- Reasoning\n"
-            "- Challenges (optional)\n"
-            "Format the report clearly using Markdown syntax. Use bullet points, headings, and code blocks where"
-            "appropriate.\n"
-        ),
-    )
-    report_writer_agent.execute_task(report_task)
-
-
 def run_command(cmd: str) -> str:
     """Execute a shell command after Manager Agent review.
 
