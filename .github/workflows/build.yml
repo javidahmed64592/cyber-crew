@@ -56,7 +56,8 @@ jobs:
           PACKAGE_VERSION=$(echo "$WHEEL_FILE" | sed -n "s/.*${PACKAGE_NAME}-\(.*\)-py3-none-any\.whl/\1/p")
 
           mv "$WHEEL_FILE" "release/$(basename "$WHEEL_FILE")"
-          mv config.yaml release/
+          mkdir release/cyber_crew
+          mv config release/cyber_crew
           mv .env.example release/.env
           chmod +x release/install_cyber_crew.sh
           chmod +x release/run_example_ctf.sh
@@ -121,8 +122,13 @@ jobs:
             exit 1
           fi
 
-          if [ ! -f "config.yaml" ]; then
-            echo "Config file not found"
+          if [ ! -f "cyber_crew/config/agents.yaml" ]; then
+            echo "Agents config file not found"
+            exit 1
+          fi
+
+          if [ ! -f "cyber_crew/config/tasks.yaml" ]; then
+            echo "Tasks config file not found"
             exit 1
           fi
 
