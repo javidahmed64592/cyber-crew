@@ -4,9 +4,35 @@ from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai.project import CrewBase, agent, crew, task
 
+from cyber_crew.tools.filesystem.check_file_exists import CheckFileExists
+from cyber_crew.tools.filesystem.list_files import ListFiles
+from cyber_crew.tools.filesystem.read_file import ReadFile
+from cyber_crew.tools.filesystem.write_file import WriteFile
+from cyber_crew.tools.network.fetch_url import FetchUrl
+from cyber_crew.tools.network.gobuster_scan import GobusterScan
+from cyber_crew.tools.network.nikto_scan import NiktoScan
+from cyber_crew.tools.network.nmap_scan import NmapScan
+from cyber_crew.tools.run_command import RunCommand
+from cyber_crew.tools.vulnerability.find_suids import FindSuids
+from cyber_crew.tools.vulnerability.search_exploit import SearchExploit
+
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
+
+
+# Tools
+check_file_exists = CheckFileExists()
+list_files = ListFiles()
+read_file = ReadFile()
+write_file = WriteFile()
+fetch_url = FetchUrl()
+gobuster_scan = GobusterScan()
+nikto_scan = NiktoScan()
+nmap_scan = NmapScan()
+run_command = RunCommand()
+find_suids = FindSuids()
+search_exploit = SearchExploit()
 
 
 @CrewBase
@@ -35,6 +61,7 @@ class CyberCrew:
         """Return the Recon Specialist Agent."""
         return Agent(
             config=self.agents_config["recon_specialist"],
+            tools=[nmap_scan, nikto_scan, gobuster_scan, run_command],
             verbose=True,
         )
 
@@ -43,6 +70,7 @@ class CyberCrew:
         """Return the Vulnerability Analyst Agent."""
         return Agent(
             config=self.agents_config["vulnerability_analyst"],
+            tools=[search_exploit, run_command],
             verbose=True,
         )
 
@@ -51,6 +79,7 @@ class CyberCrew:
         """Return the Exploit Engineer Agent."""
         return Agent(
             config=self.agents_config["exploit_engineer"],
+            tools=[fetch_url, search_exploit, run_command],
             verbose=True,
         )
 
@@ -59,6 +88,7 @@ class CyberCrew:
         """Return the Access Broker Agent."""
         return Agent(
             config=self.agents_config["access_broker"],
+            tools=[fetch_url, read_file, run_command],
             verbose=True,
         )
 
@@ -67,6 +97,7 @@ class CyberCrew:
         """Return the Privilege Escalator Agent."""
         return Agent(
             config=self.agents_config["privilege_escalator"],
+            tools=[find_suids, search_exploit, run_command],
             verbose=True,
         )
 
@@ -75,6 +106,7 @@ class CyberCrew:
         """Return the File Mapper Agent."""
         return Agent(
             config=self.agents_config["file_mapper"],
+            tools=[check_file_exists, list_files, run_command],
             verbose=True,
         )
 
@@ -83,6 +115,7 @@ class CyberCrew:
         """Return the Flag Hunter Agent."""
         return Agent(
             config=self.agents_config["flag_hunter"],
+            tools=[check_file_exists, read_file, run_command],
             verbose=True,
         )
 
@@ -91,6 +124,7 @@ class CyberCrew:
         """Return the Report Writer Agent."""
         return Agent(
             config=self.agents_config["report_writer"],
+            tools=[write_file],
             verbose=True,
         )
 
