@@ -15,11 +15,6 @@ from cyber_crew.tools.run_command import RunCommand
 from cyber_crew.tools.vulnerability.find_suids import FindSuids
 from cyber_crew.tools.vulnerability.search_exploit import SearchExploit
 
-# If you want to run a snippet of code before or after the crew starts,
-# you can use the @before_kickoff and @after_kickoff decorators
-# https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
-
-
 # Tools
 check_file_exists = CheckFileExists()
 list_files = ListFiles()
@@ -40,12 +35,7 @@ class CyberCrew:
     agents: list[BaseAgent]
     tasks: list[Task]
 
-    # Learn more about YAML configuration files here:
-    # Agents: https://docs.crewai.com/concepts/agents#yaml-configuration-recommended
-    # Tasks: https://docs.crewai.com/concepts/tasks#yaml-configuration-recommended
-
-    # If you would like to add tools to your agents, you can learn more about it here:
-    # https://docs.crewai.com/concepts/agents#agent-tools
+    # Agents
     @agent
     def manager_agent(self) -> Agent:
         """Return the Manager Agent."""
@@ -125,9 +115,7 @@ class CyberCrew:
             verbose=True,
         )
 
-    # To learn more about structured task outputs,
-    # task dependencies, and task callbacks, check out the documentation:
-    # https://docs.crewai.com/concepts/tasks#overview-of-a-task
+    # Tasks
     @task
     def recon_task(self) -> Task:
         """Create the Recon Task."""
@@ -177,7 +165,6 @@ class CyberCrew:
             config=self.tasks_config["flag_extraction"],
         )
 
-    @task
     def report_writing(self) -> Task:
         """Create the Report Writing Task."""
         return Task(
@@ -185,6 +172,7 @@ class CyberCrew:
             output_file="report.md",
         )
 
+    # Kickoff
     @crew
     def crew(self) -> Crew:
         """Create the CyberCrew crew."""
