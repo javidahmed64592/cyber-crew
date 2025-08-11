@@ -3,7 +3,10 @@ recon_task:
     Scan the target system for open ports and directories.
     Consider the mission context and focus your reconnaissance accordingly.
   expected_output: >
-    TODO: WRITE ME
+    - Results of Nmap scan: List of open ports and detected services (from nmap_scan).
+    - Results of Gobuster scan: Discovered directories and files (from gobuster_scan).
+    - Results of Nikto scan: Web server vulnerabilities and issues (from nikto_scan).
+    - Any additional findings from custom shell commands (from run_command).
   agent: recon_specialist
 
 vulnerability_analysis:
@@ -11,14 +14,17 @@ vulnerability_analysis:
     Identify known vulnerabilities based on recon data.
     Analyze findings in the context of the current mission objectives.
   expected_output: >
-    TODO: WRITE ME
+    - List of vulnerabilities for each discovered service or directory (from search_exploit).
+    - CVE identifiers, exploitability ratings, and references where available.
+    - Any additional findings from custom shell commands (from run_command).
   agent: vulnerability_analyst
 
 exploitation:
   description: >
     Use discovered vulnerabilities to gain access. Execute exploits that align with the mission requirements.
   expected_output: >
-    TODO: WRITE ME
+    - Details of all attempted exploits, including payloads or requests sent (from fetch_url, search_exploit, run_command).
+    - Indicate which exploits succeeded or failed, and provide any output or error messages.
   agent: exploit_engineer
 
 access_establishment:
@@ -26,7 +32,8 @@ access_establishment:
     Bypass authentication or upload a shell.
     Establish access methods appropriate for the mission scenario.
   expected_output: >
-    TODO: WRITE ME
+    - Confirmation of access established (e.g., shell upload, credential use) with method specified (from fetch_url, read_file, run_command).
+    - Session or shell details, and any output from executed commands.
   agent: access_broker
 
 privilege_escalation:
@@ -34,14 +41,18 @@ privilege_escalation:
     Escalate privileges using known techniques.
     Focus on gaining the level of access needed for the mission.
   expected_output: >
-    TODO: WRITE ME
+    - List of files with SUID bit set (from find_vulnerable_suids).
+    - Vulnerabilities or exploits used for escalation (from search_exploit, run_command).
+    - Final privilege level achieved and method used.
   agent: privilege_escalator
 
 file_system_mapping:
   description: >
     Explore the file system to locate potential flag files or targets specified in the mission.
   expected_output: >
-    TODO: WRITE ME
+    - List of all identified file and directory paths (from list_files).
+    - Confirmation of existence for specific files (from check_file_exists).
+    - Any additional findings from custom shell commands (from run_command).
   agent: file_mapper
 
 flag_extraction:
@@ -49,5 +60,7 @@ flag_extraction:
     Read contents of suspected flag files and verify.
     Complete the mission objective by extracting the required data.
   expected_output: >
-    TODO: WRITE ME
+    - Confirmation of flag file existence (from check_file_exists).
+    - Contents of flag files (from read_file).
+    - Any additional findings from custom shell commands (from run_command).
   agent: report_writer
