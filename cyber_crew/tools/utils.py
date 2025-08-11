@@ -1,9 +1,8 @@
-"""Tools for the CyberSec Crew."""
+"""Utility functions for the Cyber Crew."""
 
 import re
 
 from crewai import Agent, Task
-from crewai.tools import tool
 
 from cyber_crew.shell import InteractiveShell
 
@@ -90,7 +89,6 @@ def generate_mission_outcome_summary(report_writer_agent: Agent) -> None:
     report_writer_agent.execute_task(report_task)
 
 
-@tool
 def run_command(cmd: str) -> str:
     """Execute a shell command after Manager Agent review.
 
@@ -106,115 +104,3 @@ def run_command(cmd: str) -> str:
         return f"Command blocked by Manager Agent: `{cmd}`"
     output = _shell.run_command(cmd)
     return output.strip() or "Command executed successfully."
-
-
-@tool
-def gobuster_scan(url: str, wordlist: str = "/usr/share/wordlists/dirb/common.txt") -> str:
-    """Perform a Gobuster directory scan on the specified URL.
-
-    :param str url: The target URL for the scan.
-    :param str wordlist: The wordlist to use for the scan.
-    :return str: The output of the Gobuster scan.
-    """
-    cmd = f"gobuster dir -u {url} -w {wordlist}"
-    return str(run_command(cmd))
-
-
-@tool
-def nikto_scan(target: str) -> str:
-    """Perform a Nikto scan on the specified target.
-
-    :param str target: The target URL for the scan.
-    :return str: The output of the Nikto scan.
-    """
-    cmd = f"nikto -h {target}"
-    return str(run_command(cmd))
-
-
-@tool
-def nmap_scan(target: str) -> str:
-    """Perform an Nmap scan on the specified target.
-
-    :param str target: The target URL for the scan.
-    :return str: The output of the Nmap scan.
-    """
-    cmd = f"nmap -Pn -sV {target}"
-    return str(run_command(cmd))
-
-
-@tool
-def fetch_url(url: str) -> str:
-    """Fetch the content of a URL.
-
-    :param str url: The URL to fetch.
-    :return str: The content of the fetched URL.
-    """
-    cmd = f"curl -s {url}"
-    return str(run_command(cmd))
-
-
-@tool
-def search_exploit(query: str) -> str:
-    """Search for exploits related to the specified query.
-
-    :param str query: The search query.
-    :return str: The search results.
-    """
-    cmd = f"searchsploit {query}"
-    return str(run_command(cmd))
-
-
-@tool
-def find_vulnerable_suids() -> str:
-    """Find files with the SUID bit set.
-
-    :return str: The output of the find command.
-    """
-    cmd = "find / -perm -4000 -type f 2>/dev/null"
-    return str(run_command(cmd))
-
-
-@tool
-def check_file_exists(path: str) -> str:
-    """Check if a file exists at the specified path.
-
-    :param str path: The file path to check.
-    :return str: The result of the file existence check.
-    """
-    cmd = f"test -f {path} && echo FOUND || echo NOT_FOUND"
-    return str(run_command(cmd))
-
-
-@tool
-def list_files(path: str = "/") -> str:
-    """List all files in the specified directory.
-
-    :param str path: The directory path to list files from.
-    :return str: The list of files in the directory.
-    """
-    cmd = f"ls -Rla {path}"
-    return str(run_command(cmd))
-
-
-@tool
-def read_file(path: str) -> str:
-    """Read the contents of a file at the specified path.
-
-    :param str path: The file path to read.
-    :return str: The contents of the file.
-    """
-    cmd = f"cat {path}"
-    return str(run_command(cmd))
-
-
-@tool
-def write_file(path: str, content: str) -> str:
-    """Write content to a file at the specified path.
-
-    :param str path: The file path to write to.
-    :param str content: The content to write to the file.
-    :return str: Confirmation message or error.
-    """
-    escaped_content = content.replace("'", "'\"'\"'")
-    cmd = f"echo '{escaped_content}' > {path}"
-    return str(run_command(cmd))
