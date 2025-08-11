@@ -1,17 +1,53 @@
-research_task:
+recon_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Scan the target system for open ports and directories.
+    Consider the mission context and focus your reconnaissance accordingly.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    TODO: WRITE ME
+  agent: recon_specialist
 
-reporting_task:
+vulnerability_analysis:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Identify known vulnerabilities based on recon data.
+    Analyze findings in the context of the current mission objectives.
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    TODO: WRITE ME
+  agent: vulnerability_analyst
+
+exploitation:
+  description: >
+    Use discovered vulnerabilities to gain access. Execute exploits that align with the mission requirements.
+  expected_output: >
+    TODO: WRITE ME
+  agent: exploit_engineer
+
+access_establishment:
+  description: >
+    Bypass authentication or upload a shell.
+    Establish access methods appropriate for the mission scenario.
+  expected_output: >
+    TODO: WRITE ME
+  agent: access_broker
+
+privilege_escalation:
+  description: >
+    Escalate privileges using known techniques.
+    Focus on gaining the level of access needed for the mission.
+  expected_output: >
+    TODO: WRITE ME
+  agent: privilege_escalator
+
+file_system_mapping:
+  description: >
+    Explore the file system to locate potential flag files or targets specified in the mission.
+  expected_output: >
+    TODO: WRITE ME
+  agent: file_mapper
+
+flag_extraction:
+  description: >
+    Read contents of suspected flag files and verify.
+    Complete the mission objective by extracting the required data.
+  expected_output: >
+    TODO: WRITE ME
+  agent: report_writer
