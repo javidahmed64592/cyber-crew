@@ -1,11 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [project]
-name = "cyber_crew"
-version = "0.1.0"
-description = "cyber-crew using crewAI"
-authors = [{ name = "Your Name", email = "you@example.com" }]
-requires-python = ">=3.10,<3.14"
+name = "cyber-crew"
+version = "0.1.1"
+description = "A CrewAI-powered cybersecurity team."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Javid Ahmed", email = "javidahmed@icloud.com" }
+]
+classifiers = [
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+]
 dependencies = [
-    "crewai[tools]>=0.157.0,<1.0.0"
+    "crewai[tools]>=0.157.0,<1.0.0",
+    "pexpect>=4.9.0",
+    "google-generativeai>=0.8.0",
+]
+
+[project.urls]
+repository = "https://github.com/javidahmed64592/template-python"
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "mypy",
+    "pytest",
+    "pytest-cov",
+    "tomli",
 ]
 
 [project.scripts]
@@ -15,9 +42,119 @@ train = "cyber_crew.main:train"
 replay = "cyber_crew.main:replay"
 test = "cyber_crew.main:test"
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [tool.crewai]
 type = "crew"
+
+[tool.pytest.ini_options]
+addopts = [
+    "-vv",
+    "--cov",
+    "--cov-report",
+    "term-missing",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 120
+indent-width = 4
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+extend-exclude = [
+    "**/__init__.py",
+]
+
+[tool.ruff.lint]
+select = [
+    "A",
+    "ANN",
+    "ASYNC",
+    "B",
+    "C4",
+    "D",
+    "E",
+    "EM",
+    "F",
+    "FBT",
+    "G",
+    "I",
+    "ISC",
+    "LOG",
+    "N",
+    "NPY",
+    "PD",
+    "PERF",
+    "PL",
+    "PT",
+    "RET",
+    "RUF",
+    "S",
+    "TRY",
+    "UP",
+    "W",
+    "YTT",
+]
+ignore = [
+    "D203",
+    "D213",
+    "G004",
+    "PLR0913",
+    "S101"
+]
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.mypy]
+warn_unused_configs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unreachable = true
+pretty = true
+
+[[tool.mypy.overrides]]
+module = [
+    "crewai.*",
+    "pexpect.*",
+    "yaml.*",
+]
+ignore_missing_imports = true
