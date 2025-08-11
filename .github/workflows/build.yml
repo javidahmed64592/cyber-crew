@@ -57,6 +57,7 @@ jobs:
 
           mv "$WHEEL_FILE" "release/$(basename "$WHEEL_FILE")"
           mv config.yaml release/
+          mv .env.example release/.env
           chmod +x release/install_cyber_crew.sh
           chmod +x release/run_example_ctf.sh
           mv release ${PACKAGE_NAME}_${PACKAGE_VERSION}
@@ -115,8 +116,8 @@ jobs:
             exit 1
           fi
 
-          if [ ! -d "logs" ]; then
-            echo "Logs directory not found"
+          if [ ! -f ".env" ]; then
+            echo "Environment file not found"
             exit 1
           fi
 

@@ -45,9 +45,6 @@ rm -rf *
 EOF
 chmod +x "${UNINSTALL_PATH}"
 
-echo "Setting up .env file..."
-mv .env.example .env
-
 cat > "${README_PATH}" << EOF
 Cyber Crew has been installed successfully.
 Run the application using './${EXE_NAME}'
