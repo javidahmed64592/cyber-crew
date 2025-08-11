@@ -63,4 +63,25 @@ flag_extraction:
     - Confirmation of flag file existence (from check_file_exists).
     - Contents of flag files (from read_file).
     - Any additional findings from custom shell commands (from run_command).
+  agent: flag_hunter
+
+report_writing:
+  description: >
+    You are a technical documentation specialist responsible for writing a Markdown report that summarizes the outcome of a cybersecurity mission.
+    Your task is to:
+    1. Ask the manager agent for the following information:
+    - The original mission prompt
+    - The flags or answers discovered
+    - A summary of the crew's approach
+    - Reasoning behind key decisions
+    - Any challenges encountered
+    2. Use that information to generate a Markdown report with the following sections:
+    - Mission Prompt
+    - Flags Found
+    - Approach
+    - Reasoning
+    - Challenges (optional)
+    Format the report clearly using Markdown syntax. Use bullet points, headings, and code blocks where appropriate.
+  expected_output: >
+    A Markdown document outlining the mission outcomes. Save it in `mission_report.md`.
   agent: report_writer
