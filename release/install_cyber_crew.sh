@@ -8,14 +8,13 @@ PACKAGE_NAME="cyber_crew"
 WD=$(pwd)
 VENV_NAME=".venv"
 EXE_NAME="cyber-crew"
-CONFIG_FILE="config.yaml"
 UNINSTALL_FILE="uninstall_cyber_crew.sh"
 README_FILE="README.txt"
 
 FULL_VENV_PATH="${WD}/${VENV_NAME}"
 BIN_DIR="${FULL_VENV_PATH}/bin"
 
-CONFIG_PATH="${WD}/${CONFIG_FILE}"
+CONFIG_PATH="${WD}/${PACKAGE_NAME}/config"
 UNINSTALL_PATH="${WD}/${UNINSTALL_FILE}"
 README_PATH="${WD}/${README_FILE}"
 
@@ -48,7 +47,7 @@ chmod +x "${UNINSTALL_PATH}"
 cat > "${README_PATH}" << EOF
 Cyber Crew has been installed successfully.
 Run the application using './${EXE_NAME}'
-To configure the application, edit the configuration file at: '${CONFIG_PATH}'
+To configure the application, edit the configuration files at: '${CONFIG_PATH}'
 Add your environment variables to the '.env' file.
 To uninstall, run: './${UNINSTALL_FILE}'
 EOF

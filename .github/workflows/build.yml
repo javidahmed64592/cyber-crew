@@ -57,7 +57,7 @@ jobs:
 
           mv "$WHEEL_FILE" "release/$(basename "$WHEEL_FILE")"
           mkdir release/cyber_crew
-          mv config release/cyber_crew
+          mv cyber_crew/config release/cyber_crew
           mv .env.example release/.env
           chmod +x release/install_cyber_crew.sh
           chmod +x release/run_example_ctf.sh
