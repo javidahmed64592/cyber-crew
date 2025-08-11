@@ -1,4 +1,4 @@
-"""Interactive shell for CyberSec Crew."""
+"""Interactive shell for Cyber Crew."""
 
 import pexpect
 

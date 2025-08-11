@@ -1,4 +1,4 @@
-"""Pytest fixtures for the CyberSec Crew unit tests."""
+"""Pytest fixtures for the Cyber Crew unit tests."""
 
 import sys
 from unittest.mock import MagicMock
