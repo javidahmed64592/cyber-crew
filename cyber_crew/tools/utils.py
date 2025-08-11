@@ -21,6 +21,11 @@ def set_global_vars(manager_agent: Agent | None = None, shell: InteractiveShell 
     _shell = shell or _shell
 
 
+def get_shell() -> InteractiveShell | None:
+    """Get the InteractiveShell instance."""
+    return _shell
+
+
 def extract_decision(text: str) -> str:
     """Extract the approval decision from the Manager Agent's response.
 
