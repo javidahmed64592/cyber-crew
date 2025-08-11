@@ -2,12 +2,11 @@
 
 from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
-from crewai.project import CrewBase, agent, crew, task
+from crewai.project import CrewBase, after_kickoff, agent, crew, task
 
 from cyber_crew.tools.filesystem.check_file_exists import CheckFileExists
 from cyber_crew.tools.filesystem.list_files import ListFiles
 from cyber_crew.tools.filesystem.read_file import ReadFile
-from cyber_crew.tools.filesystem.write_file import WriteFile
 from cyber_crew.tools.network.fetch_url import FetchUrl
 from cyber_crew.tools.network.gobuster_scan import GobusterScan
 from cyber_crew.tools.network.nikto_scan import NiktoScan
@@ -25,7 +24,6 @@ from cyber_crew.tools.vulnerability.search_exploit import SearchExploit
 check_file_exists = CheckFileExists()
 list_files = ListFiles()
 read_file = ReadFile()
-write_file = WriteFile()
 fetch_url = FetchUrl()
 gobuster_scan = GobusterScan()
 nikto_scan = NiktoScan()
@@ -124,7 +122,6 @@ class CyberCrew:
         """Return the Report Writer Agent."""
         return Agent(
             config=self.agents_config["report_writer"],
-            tools=[write_file],
             verbose=True,
         )
 
@@ -201,3 +198,8 @@ class CyberCrew:
             verbose=True,
             # process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
         )
+
+    @after_kickoff
+    def write_summary_report(self) -> None:
+        """Write a summary report after the crew has completed its tasks."""
+        self.report_writer().execute_task(self.report_writing())
