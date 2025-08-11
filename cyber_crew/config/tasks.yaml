@@ -1,0 +1,87 @@
+recon_task:
+  description: >
+    Scan the target system for open ports and directories.
+    Consider the mission context and focus your reconnaissance accordingly.
+  expected_output: >
+    - Results of Nmap scan: List of open ports and detected services (from nmap_scan).
+    - Results of Gobuster scan: Discovered directories and files (from gobuster_scan).
+    - Results of Nikto scan: Web server vulnerabilities and issues (from nikto_scan).
+    - Any additional findings from custom shell commands (from run_command).
+  agent: recon_specialist
+
+vulnerability_analysis:
+  description: >
+    Identify known vulnerabilities based on recon data.
+    Analyze findings in the context of the current mission objectives.
+  expected_output: >
+    - List of vulnerabilities for each discovered service or directory (from search_exploit).
+    - CVE identifiers, exploitability ratings, and references where available.
+    - Any additional findings from custom shell commands (from run_command).
+  agent: vulnerability_analyst
+
+exploitation:
+  description: >
+    Use discovered vulnerabilities to gain access. Execute exploits that align with the mission requirements.
+  expected_output: >
+    - Details of all attempted exploits, including payloads or requests sent (from fetch_url, search_exploit, run_command).
+    - Indicate which exploits succeeded or failed, and provide any output or error messages.
+  agent: exploit_engineer
+
+access_establishment:
+  description: >
+    Bypass authentication or upload a shell.
+    Establish access methods appropriate for the mission scenario.
+  expected_output: >
+    - Confirmation of access established (e.g., shell upload, credential use) with method specified (from fetch_url, read_file, run_command).
+    - Session or shell details, and any output from executed commands.
+  agent: access_broker
+
+privilege_escalation:
+  description: >
+    Escalate privileges using known techniques.
+    Focus on gaining the level of access needed for the mission.
+  expected_output: >
+    - List of files with SUID bit set (from find_vulnerable_suids).
+    - Vulnerabilities or exploits used for escalation (from search_exploit, run_command).
+    - Final privilege level achieved and method used.
+  agent: privilege_escalator
+
+file_system_mapping:
+  description: >
+    Explore the file system to locate potential flag files or targets specified in the mission.
+  expected_output: >
+    - List of all identified file and directory paths (from list_files).
+    - Confirmation of existence for specific files (from check_file_exists).
+    - Any additional findings from custom shell commands (from run_command).
+  agent: file_mapper
+
+flag_extraction:
+  description: >
+    Read contents of suspected flag files and verify.
+    Complete the mission objective by extracting the required data.
+  expected_output: >
+    - Confirmation of flag file existence (from check_file_exists).
+    - Contents of flag files (from read_file).
+    - Any additional findings from custom shell commands (from run_command).
+  agent: flag_hunter
+
+report_writing:
+  description: >
+    You are a technical documentation specialist responsible for writing a Markdown report that summarizes the outcome of a cybersecurity mission.
+    Your task is to:
+    1. Ask the manager agent for the following information:
+    - The original mission prompt
+    - The flags or answers discovered
+    - A summary of the crew's approach
+    - Reasoning behind key decisions
+    - Any challenges encountered
+    2. Use that information to generate a Markdown report with the following sections:
+    - Mission Prompt
+    - Flags Found
+    - Approach
+    - Reasoning
+    - Challenges (optional)
+    Format the report clearly using Markdown syntax. Use bullet points, headings, and code blocks where appropriate.
+  expected_output: >
+    A Markdown document outlining the mission outcomes. Save it in `mission_report.md`.
+  agent: report_writer
