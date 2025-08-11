@@ -47,6 +47,7 @@ def run() -> None:
     context = get_context_dictionary(args)
     cyber_crew = CyberCrew()
     set_global_vars(manager_agent=cyber_crew.manager_agent)
+    create_shell(username=args.username, password=args.password)
 
     try:
         logger.info("Kicking off mission...")
@@ -69,6 +70,7 @@ def train() -> None:
     context = get_context_dictionary(args)
     cyber_crew = CyberCrew()
     set_global_vars(manager_agent=cyber_crew.manager_agent)
+    create_shell(username=args.username, password=args.password)
 
     try:
         logger.info(f"Training the crew for {args.n_iterations} iterations...")
@@ -90,6 +92,7 @@ def replay() -> None:
     args = parse_args()
     cyber_crew = CyberCrew()
     set_global_vars(manager_agent=cyber_crew.manager_agent)
+    create_shell(username=args.username, password=args.password)
 
     try:
         logger.info(f"Replaying crew execution for task ID: {args.task_id}")
@@ -111,6 +114,7 @@ def test() -> None:
     context = get_context_dictionary(args)
     cyber_crew = CyberCrew()
     set_global_vars(manager_agent=cyber_crew.manager_agent)
+    create_shell(username=args.username, password=args.password)
 
     try:
         logger.info(f"Testing the crew with {args.n_iterations} iterations using {os.environ.get('MODEL')}...")
