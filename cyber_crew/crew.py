@@ -38,7 +38,6 @@ class CyberCrew:
     tasks_config: dict
 
     # Agents
-    @agent
     def manager_agent(self) -> Agent:
         """Return the Manager Agent."""
         return Agent(
