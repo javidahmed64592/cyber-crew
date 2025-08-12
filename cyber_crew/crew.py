@@ -182,6 +182,7 @@ class CyberCrew:
             tasks=self.tasks,
             process=Process.hierarchical,
             manager_agent=self.manager_agent(),
+            max_rpm=12,
             verbose=True,
         )
 
