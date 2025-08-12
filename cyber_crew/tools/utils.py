@@ -21,6 +21,11 @@ def set_global_vars(manager_agent: Agent | None = None, shell: InteractiveShell 
     _shell = shell or _shell
 
 
+def get_manager_agent() -> Agent | None:
+    """Get the Manager Agent instance."""
+    return _manager_agent
+
+
 def get_shell() -> InteractiveShell | None:
     """Get the InteractiveShell instance."""
     return _shell
@@ -42,23 +47,23 @@ def request_command_review(cmd: str) -> str:
     :param str cmd: The shell command to be executed.
     :return str: The approval decision from the Manager Agent.
     """
-    if not _manager_agent:
+    if not (manager_agent := get_manager_agent()):
         msg = "Manager Agent is not set. Please initialize it before requesting command review."
         raise ValueError(msg)
 
     review_task = Task(
-        agent=_manager_agent,
+        agent=manager_agent,
         name="Review Shell Command",
         expected_output="APPROVED or BLOCKED",
         description=(
-            f"Evaluate the following shell command for any potential malicious or harmful behavior.\n"
-            f"The command must only be used to work towards the mission objective.\n"
-            f"It must not be used to interact with any other systems.\n"
+            "Evaluate the following shell command for any potential malicious or harmful behavior.\n"
+            "The command must only be used to work towards the mission objective.\n"
+            "It must not be used to interact with any other systems.\n"
             f"Command: `{cmd}`\n"
-            f"Should this command be executed? Respond with 'APPROVED' or 'BLOCKED'."
+            "Should this command be executed? Respond with 'APPROVED' or 'BLOCKED'."
         ),
     )
-    decision = _manager_agent.execute_task(review_task)
+    decision = manager_agent.execute_task(review_task)
     return extract_decision(decision)
 
 
@@ -68,12 +73,12 @@ def run_command(cmd: str) -> str:
     :param str cmd: The shell command to be executed.
     :return str: The output of the shell command or an error message.
     """
-    if not _shell:
+    if not (shell := get_shell()):
         msg = "InteractiveShell is not set. Please initialize it before running commands."
         raise ValueError(msg)
 
     decision = request_command_review(cmd)
     if decision != "APPROVED":
         return f"Command blocked by Manager Agent: `{cmd}`"
-    output = _shell.run_command(cmd)
+    output = shell.run_command(cmd)
     return output.strip() or "Command executed successfully."
