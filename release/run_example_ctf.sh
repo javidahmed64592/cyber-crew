@@ -19,6 +19,20 @@ ALPHA_DIR="${CTF_DIR}/alpha"
 BRAVO_DIR="${CTF_DIR}/bravo"
 CHARLIE_DIR="${CTF_DIR}/charlie"
 
+# Cleanup function
+cleanup() {
+  echo ${SEPARATOR}
+  echo "Cleaning up..."
+  if [ -d "${CTF_DIR}" ]; then
+    rm -rf "${CTF_DIR}"
+    echo "CTF directory removed."
+  fi
+  echo "Mission complete!"
+  echo ${SEPARATOR}
+}
+
+trap cleanup EXIT
+
 echo ${SEPARATOR}
 echo "Creating CTF directory structure..."
 
@@ -45,10 +59,3 @@ tree "${CTF_DIR}"
 echo ${SEPARATOR}
 echo "Running the Cyber Crew mission..."
 uv run cyber-crew -u "${USERNAME}" -p "${PASSWORD}" -m "Find the flag located in the '${CTF_DIR}' directory. It has the format 'FLAG{...}'."
-echo ${SEPARATOR}
-
-# Cleanup
-echo "Cleaning up..."
-rm -rf "${CTF_DIR}"
-
-echo "Mission complete!"
