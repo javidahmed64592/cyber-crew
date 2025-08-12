@@ -46,7 +46,7 @@ def run() -> None:
     args = parse_args()
     context = get_context_dictionary(args)
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent)
+    set_global_vars(manager_agent=cyber_crew.manager_agent())
     create_shell(username=args.username, password=args.password)
 
     try:
@@ -69,7 +69,7 @@ def train() -> None:
     args = parse_args()
     context = get_context_dictionary(args)
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent)
+    set_global_vars(manager_agent=cyber_crew.manager_agent())
     create_shell(username=args.username, password=args.password)
 
     try:
@@ -91,7 +91,7 @@ def replay() -> None:
     """Replay the crew execution from a specific task."""
     args = parse_args()
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent)
+    set_global_vars(manager_agent=cyber_crew.manager_agent())
     create_shell(username=args.username, password=args.password)
 
     try:
@@ -113,7 +113,7 @@ def test() -> None:
     args = parse_args()
     context = get_context_dictionary(args)
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent)
+    set_global_vars(manager_agent=cyber_crew.manager_agent())
     create_shell(username=args.username, password=args.password)
 
     try:
