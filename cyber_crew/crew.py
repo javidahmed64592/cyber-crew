@@ -4,16 +4,10 @@ from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai.project import CrewBase, after_kickoff, agent, crew, task
 
-from cyber_crew.tools.filesystem.check_file_exists import CheckFileExists
-from cyber_crew.tools.filesystem.list_files import ListFiles
-from cyber_crew.tools.filesystem.read_file import ReadFile
-from cyber_crew.tools.network.fetch_url import FetchUrl
-from cyber_crew.tools.network.gobuster_scan import GobusterScan
-from cyber_crew.tools.network.nikto_scan import NiktoScan
-from cyber_crew.tools.network.nmap_scan import NmapScan
+from cyber_crew.tools.filesystem import CheckFileExists, ListFiles, ReadFile
+from cyber_crew.tools.network import FetchUrl, GobusterScan, NiktoScan, NmapScan
 from cyber_crew.tools.run_command import RunCommand
-from cyber_crew.tools.vulnerability.find_suids import FindSuids
-from cyber_crew.tools.vulnerability.search_exploit import SearchExploit
+from cyber_crew.tools.vulnerability import FindSuids, SearchExploit
 
 # Tools
 check_file_exists = CheckFileExists()
