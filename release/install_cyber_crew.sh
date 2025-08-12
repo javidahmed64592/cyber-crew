@@ -30,7 +30,7 @@ rm "${WHEEL_FILE}"
 echo "Creating API executables..."
 cat > "${WD}/${EXE_NAME}" << EOF
 #!/bin/bash
-export cyber_crew_ROOT_DIR=${WD}
+export CYBER_CREW_ROOT_DIR=${WD}
 ${BIN_DIR}/${EXE_NAME} "\$@"
 EOF
 chmod +x "${WD}/${EXE_NAME}"
