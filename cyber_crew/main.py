@@ -107,7 +107,7 @@ def replay() -> None:
         cleanup()
 
 
-def test() -> None:
+def crew_test() -> None:
     """Test the crew execution and returns the results."""
     args = parse_args()
     context = get_context_dictionary(args=args)
