@@ -34,97 +34,93 @@ def get_context_dictionary(args: argparse.Namespace) -> dict[str, str]:
     }
 
 
-def create_shell(username: str, password: str) -> None:
+def create_shell(args: argparse.Namespace) -> None:
     """Create a shell session with the given username and password."""
     logger.info("Establishing shell connection...")
-    shell = InteractiveShell(username=username, password=password)
+    shell = InteractiveShell(username=args.username, password=args.password)
     set_global_vars(shell=shell)
+
+
+def cleanup() -> None:
+    """Clean up resources after running the crew."""
+    if shell := get_shell():
+        logger.info("Closing shell session...")
+        shell.close()
+    logger.info("Complete!")
 
 
 def run() -> None:
     """Run the crew."""
     args = parse_args()
-    context = get_context_dictionary(args)
+    context = get_context_dictionary(args=args)
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent())
-    create_shell(username=args.username, password=args.password)
+    crew_instance = cyber_crew.crew()
+    set_global_vars(manager_agent=crew_instance.manager_agent)
+    create_shell(args=args)
 
     try:
         logger.info("Kicking off mission...")
-        result = cyber_crew.crew().kickoff(inputs=context)
+        result = crew_instance.kickoff(inputs=context)
         logger.info(f"Mission result: {result}")
     except Exception as e:
         msg = f"An error occurred while running the crew: {e}"
         logger.exception(msg)
-        raise
     finally:
-        if shell := get_shell():
-            logger.info("Closing shell session...")
-            shell.close()
-        logger.info("Complete!")
+        cleanup()
 
 
 def train() -> None:
     """Train the crew for a given number of iterations."""
     args = parse_args()
-    context = get_context_dictionary(args)
+    context = get_context_dictionary(args=args)
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent())
-    create_shell(username=args.username, password=args.password)
+    crew_instance = cyber_crew.crew()
+    set_global_vars(manager_agent=crew_instance.manager_agent)
+    create_shell(args=args)
 
     try:
         logger.info(f"Training the crew for {args.n_iterations} iterations...")
-        cyber_crew.crew().train(n_iterations=int(args.n_iterations), filename=args.filename, inputs=context)
+        crew_instance.train(n_iterations=int(args.n_iterations), filename=args.filename, inputs=context)
         logger.info(f"Training completed. Data saved to {args.filename}")
     except Exception as e:
         msg = f"An error occurred while training the crew: {e}"
         logger.exception(msg)
-        raise
     finally:
-        if shell := get_shell():
-            logger.info("Closing shell session...")
-            shell.close()
-        logger.info("Complete!")
+        cleanup()
 
 
 def replay() -> None:
     """Replay the crew execution from a specific task."""
     args = parse_args()
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent())
-    create_shell(username=args.username, password=args.password)
+    crew_instance = cyber_crew.crew()
+    set_global_vars(manager_agent=crew_instance.manager_agent)
+    create_shell(args=args)
 
     try:
         logger.info(f"Replaying crew execution for task ID: {args.task_id}")
-        cyber_crew.crew().replay(task_id=args.task_id)
+        crew_instance.replay(task_id=args.task_id)
     except Exception as e:
         msg = f"An error occurred while replaying the crew: {e}"
         logger.exception(msg)
-        raise
     finally:
-        if shell := get_shell():
-            logger.info("Closing shell session...")
-            shell.close()
-        logger.info("Complete!")
+        cleanup()
 
 
 def test() -> None:
     """Test the crew execution and returns the results."""
     args = parse_args()
-    context = get_context_dictionary(args)
+    context = get_context_dictionary(args=args)
     cyber_crew = CyberCrew()
-    set_global_vars(manager_agent=cyber_crew.manager_agent())
-    create_shell(username=args.username, password=args.password)
+    crew_instance = cyber_crew.crew()
+    set_global_vars(manager_agent=crew_instance.manager_agent)
+    create_shell(args=args)
 
     try:
         logger.info(f"Testing the crew with {args.n_iterations} iterations using {os.environ.get('MODEL')}...")
-        cyber_crew.crew().test(n_iterations=int(args.n_iterations), eval_llm=os.environ.get("MODEL"), inputs=context)
+        crew_instance.test(n_iterations=int(args.n_iterations), eval_llm=os.environ.get("MODEL"), inputs=context)
     except Exception as e:
         msg = f"An error occurred while testing the crew: {e}"
         logger.exception(msg)
-        raise
     finally:
-        if shell := get_shell():
-            logger.info("Closing shell session...")
-            shell.close()
-        logger.info("Complete!")
+        cleanup()
