@@ -39,7 +39,7 @@ dev = [
 cyber-crew = "cyber_crew.main:run"
 train-crew = "cyber_crew.main:train"
 replay-crew = "cyber_crew.main:replay"
-test-crew = "cyber_crew.main:test"
+test-crew = "cyber_crew.main:crew_test"
 
 [tool.crewai]
 type = "crew"
