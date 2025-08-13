@@ -1,18 +1,12 @@
 """Unit tests for the cyber_crew.main module."""
 
+import os
 from collections.abc import Generator
 from unittest.mock import MagicMock, patch
 
 import pytest
 
-from cyber_crew.main import cleanup, create_shell, get_context_dictionary, parse_args
-
-
-@pytest.fixture
-def mock_args() -> Generator[MagicMock, None, None]:
-    """Fixture for mocking command line arguments."""
-    with patch("cyber_crew.main.parse_args") as mock:
-        yield mock
+from cyber_crew.main import cleanup, create_shell, crew_test, get_context_dictionary, parse_args, replay, run, train
 
 
 @pytest.fixture
@@ -157,3 +151,119 @@ class TestSetup:
 
         mock_get_shell.assert_called_once()
         mock_get_shell.return_value.close.assert_called_once()
+
+
+class TestMain:
+    """Unit tests for the main entry points."""
+
+    @pytest.fixture
+    def mock_args(self) -> Generator[MagicMock, None, None]:
+        """Fixture for mocking command line arguments."""
+        with patch("cyber_crew.main.parse_args") as mock:
+            yield mock
+
+    @pytest.fixture
+    def mock_get_context_dictionary(self) -> Generator[MagicMock, None, None]:
+        """Fixture for mocking the get_context_dictionary function."""
+        with patch("cyber_crew.main.get_context_dictionary") as mock:
+            yield mock
+
+    @pytest.fixture
+    def mock_create_shell(self) -> Generator[MagicMock, None, None]:
+        """Fixture for mocking the create_shell function."""
+        with patch("cyber_crew.main.create_shell") as mock:
+            yield mock
+
+    @pytest.fixture
+    def mock_cleanup(self) -> Generator[MagicMock, None, None]:
+        """Fixture for mocking the cleanup function."""
+        with patch("cyber_crew.main.cleanup") as mock:
+            yield mock
+
+    @pytest.fixture
+    def mock_cyber_crew(self) -> Generator[MagicMock, None, None]:
+        """Fixture for mocking the CyberCrew class."""
+        with patch("cyber_crew.main.CyberCrew", autospec=True) as mock:
+            yield mock
+
+    def test_run(
+        self,
+        mock_args: MagicMock,
+        mock_get_context_dictionary: MagicMock,
+        mock_create_shell: MagicMock,
+        mock_cleanup: MagicMock,
+        mock_cyber_crew: MagicMock,
+    ) -> None:
+        """Test the run function."""
+        run()
+        mock_args.assert_called_once()
+        mock_get_context_dictionary.assert_called_once_with(args=mock_args.return_value)
+        mock_create_shell.assert_called_once_with(args=mock_args.return_value)
+        mock_cyber_crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.return_value.kickoff.assert_called_once_with(
+            inputs=mock_get_context_dictionary.return_value
+        )
+        mock_cleanup.assert_called_once()
+
+    def test_train(
+        self,
+        mock_args: MagicMock,
+        mock_get_context_dictionary: MagicMock,
+        mock_create_shell: MagicMock,
+        mock_cleanup: MagicMock,
+        mock_cyber_crew: MagicMock,
+    ) -> None:
+        """Test the train function."""
+        train()
+        mock_args.assert_called_once()
+        mock_get_context_dictionary.assert_called_once_with(args=mock_args.return_value)
+        mock_create_shell.assert_called_once_with(args=mock_args.return_value)
+        mock_cyber_crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.return_value.train.assert_called_once_with(
+            n_iterations=int(mock_args.return_value.n_iterations),
+            filename=mock_args.return_value.filename,
+            inputs=mock_get_context_dictionary.return_value,
+        )
+        mock_cleanup.assert_called_once()
+
+    def test_replay(
+        self,
+        mock_args: MagicMock,
+        mock_create_shell: MagicMock,
+        mock_cleanup: MagicMock,
+        mock_cyber_crew: MagicMock,
+    ) -> None:
+        """Test the replay function."""
+        replay()
+        mock_args.assert_called_once()
+        mock_create_shell.assert_called_once_with(args=mock_args.return_value)
+        mock_cyber_crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.return_value.replay.assert_called_once_with(
+            task_id=mock_args.return_value.task_id
+        )
+        mock_cleanup.assert_called_once()
+
+    def test_crew_test(
+        self,
+        mock_args: MagicMock,
+        mock_get_context_dictionary: MagicMock,
+        mock_create_shell: MagicMock,
+        mock_cleanup: MagicMock,
+        mock_cyber_crew: MagicMock,
+    ) -> None:
+        """Test the crew_test function."""
+        crew_test()
+        mock_args.assert_called_once()
+        mock_get_context_dictionary.assert_called_once_with(args=mock_args.return_value)
+        mock_create_shell.assert_called_once_with(args=mock_args.return_value)
+        mock_cyber_crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.assert_called_once()
+        mock_cyber_crew.return_value.crew.return_value.test.assert_called_once_with(
+            n_iterations=int(mock_args.return_value.n_iterations),
+            eval_llm=os.environ.get("MODEL"),
+            inputs=mock_get_context_dictionary.return_value,
+        )
+        mock_cleanup.assert_called_once()
