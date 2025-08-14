@@ -10,14 +10,6 @@
 
 An AI-powered cybersecurity automation framework built with CrewAI that orchestrates specialized agents to conduct penetration testing and capture-the-flag (CTF) challenges. The Cyber Crew consists of expert AI agents working collaboratively to perform reconnaissance, vulnerability analysis, exploitation, privilege escalation, and comprehensive reporting.
 
-## Features
-
-- **Specialized AI Agents**: Eight expert agents with distinct cybersecurity roles
-- **Coordinated Operations**: Hierarchical management with shared context awareness
-- **Comprehensive Toolset**: Network scanning, vulnerability assessment, exploitation, and file system analysis
-- **Professional Reporting**: Automated generation of industry-standard engagement reports
-- **Safety First**: Built-in command review and safety mechanisms
-
 <!-- omit from toc -->
 ## Table of Contents
 - [Features](#features)
@@ -34,6 +26,14 @@ An AI-powered cybersecurity automation framework built with CrewAI that orchestr
 - [Safety Features](#safety-features)
 - [Testing, Linting, and Type Checking](#testing-linting-and-type-checking)
 - [License](#license)
+
+## Features
+
+- **Specialized AI Agents**: Eight expert agents with distinct cybersecurity roles
+- **Coordinated Operations**: Hierarchical management with shared context awareness
+- **Comprehensive Toolset**: Network scanning, vulnerability assessment, exploitation, and file system analysis
+- **Professional Reporting**: Automated generation of industry-standard engagement reports
+- **Safety First**: Built-in command review and safety mechanisms
 
 ## Security Notice
 
