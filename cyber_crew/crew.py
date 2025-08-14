@@ -1,5 +1,7 @@
 """Crew management for the Cyber Crew."""
 
+import os
+
 from crewai import Agent, Crew, Process, Task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from crewai.project import CrewBase, after_kickoff, agent, crew, task
@@ -181,8 +183,16 @@ class CyberCrew:
             tasks=self.tasks,
             process=Process.hierarchical,
             manager_agent=self.manager_agent(),
-            max_rpm=12,
+            max_rpm=6,
             verbose=True,
+            memory=True,
+            embedder={
+                "provider": "google",
+                "config": {
+                    "api_key": os.environ.get("GEMINI_API_KEY", "1234"),
+                    "model": "text-embedding-004",
+                },
+            },
         )
 
     @after_kickoff
