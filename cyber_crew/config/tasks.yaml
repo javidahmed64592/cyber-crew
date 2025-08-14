@@ -1,87 +1,288 @@
 recon_task:
   description: >
-    Scan the target system for open ports and directories.
-    Consider the mission context and focus your reconnaissance accordingly.
+    Conduct comprehensive network reconnaissance to map the target attack surface.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session with other agents. Before starting any commands:
+    1. Check for existing scan results, output files, or evidence of previous reconnaissance work
+    2. Review terminal history to understand what has already been attempted
+    3. Look for temporary files, log files, or data from previous agents' work
+    4. Build upon existing findings rather than duplicating efforts
+
+    Your systematic approach should include:
+    1. Port scanning with service detection and version identification
+    2. Web directory and file enumeration for discovered web services
+    3. Vulnerability scanning against identified web applications
+    4. Custom reconnaissance based on discovered services and mission context
+
+    Focus your efforts based on the mission objectives while maintaining operational stealth.
+    Document all discoveries with sufficient detail for follow-up analysis.
+    Prioritize findings by potential exploitation value and mission relevance.
   expected_output: >
-    - Results of Nmap scan: List of open ports and detected services (from nmap_scan).
-    - Results of Gobuster scan: Discovered directories and files (from gobuster_scan).
-    - Results of Nikto scan: Web server vulnerabilities and issues (from nikto_scan).
-    - Any additional findings from custom shell commands (from run_command).
+    A structured reconnaissance report in Markdown format containing:
+    - **Shared Context Review**: Summary of any existing work found in the terminal/filesystem
+    - **Port Scan Results**: Complete list of open ports with service details and versions
+    - **Web Directory Discovery**: All discovered directories, files, and endpoints with response codes
+    - **Vulnerability Scan Summary**: Identified web application vulnerabilities with severity ratings
+    - **Additional Findings**: Any custom discoveries or notable observations
+    - **Recommended Next Steps**: Prioritized list of follow-up actions based on findings
+    - **Coordination Notes**: Files, credentials, or session data left for subsequent agents
   agent: recon_specialist
 
 vulnerability_analysis:
   description: >
-    Identify known vulnerabilities based on recon data.
-    Analyze findings in the context of the current mission objectives.
+    Perform detailed vulnerability analysis on all discovered services and applications.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before beginning analysis:
+    1. Check for existing reconnaissance data, scan results, and output files from previous agents
+    2. Review any vulnerability databases or exploit research already downloaded
+    3. Look for service enumeration data, version information, and configuration details
+    4. Build upon previous agents' discoveries rather than re-scanning
+
+    Your analysis process should include:
+    1. Cross-reference discovered services with known vulnerability databases
+    2. Assess exploitability based on service versions and configurations
+    3. Research proof-of-concept exploits and determine adaptation requirements
+    4. Evaluate vulnerability chains that could lead to system compromise
+    5. Consider the mission context when prioritizing vulnerabilities
+
+    Focus on vulnerabilities that provide the best path to mission objectives.
+    Document potential attack vectors and exploitation complexity for each finding.
   expected_output: >
-    - List of vulnerabilities for each discovered service or directory (from search_exploit).
-    - CVE identifiers, exploitability ratings, and references where available.
-    - Any additional findings from custom shell commands (from run_command).
+    A comprehensive vulnerability assessment report in Markdown format containing:
+    - **Previous Work Review**: Summary of reconnaissance data and existing findings utilized
+    - **Critical Vulnerabilities**: High-impact findings with immediate exploitation potential
+    - **Medium Priority Issues**: Exploitable vulnerabilities requiring some adaptation
+    - **Information Disclosure**: Findings that could aid further exploitation
+    - **Exploitation Assessment**: For each vulnerability, include CVE, CVSS score, available exploits, and adaptation difficulty
+    - **Attack Chain Recommendations**: Suggested exploitation sequences for maximum impact
+    - **Prepared Resources**: Exploit code, payloads, or tools ready for the exploitation phase
   agent: vulnerability_analyst
 
 exploitation:
   description: >
-    Use discovered vulnerabilities to gain access. Execute exploits that align with the mission requirements.
+    Execute targeted exploitation attempts against the most promising vulnerabilities.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before executing exploits:
+    1. Check for existing exploit attempts, payload files, and previous attack artifacts
+    2. Review terminal history for successful/failed exploitation attempts
+    3. Look for downloaded exploit code, modified payloads, or established connections
+    4. Verify if any access has already been gained by previous agents
+    5. Build upon previous work rather than repeating failed attempts
+
+    Your exploitation approach should:
+    1. Start with the highest-priority vulnerabilities identified in the analysis phase
+    2. Adapt and customize exploits for the specific target environment
+    3. Test exploits carefully to avoid system damage or detection
+    4. Document all exploitation attempts with detailed logs
+    5. Focus on achieving reliable initial access or advancing mission objectives
+
+    Prioritize exploit reliability over sophistication. Ensure all attempts are logged
+    for analysis regardless of success or failure.
   expected_output: >
-    - Details of all attempted exploits, including payloads or requests sent (from fetch_url, search_exploit, run_command).
-    - Indicate which exploits succeeded or failed, and provide any output or error messages.
+    A detailed exploitation report in Markdown format containing:
+    - **Previous Attempts Review**: Summary of any existing exploitation artifacts or attempts found
+    - **Exploitation Timeline**: Chronological log of all attempts
+    - **Successful Exploits**: Working exploits with exact commands, payloads, and results
+    - **Failed Attempts**: Unsuccessful exploits with error messages and failure analysis
+    - **System Impact**: Assessment of any changes made to the target system
+    - **Access Artifacts**: Any shells, sessions, or backdoors established for subsequent agents
+    - **Next Phase Preparation**: Information and tools prepared for access establishment
   agent: exploit_engineer
 
 access_establishment:
   description: >
-    Bypass authentication or upload a shell.
-    Establish access methods appropriate for the mission scenario.
+    Establish reliable initial access to the target system using successful exploits or alternative methods.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before establishing access:
+    1. Check for existing shells, sessions, or connections already established
+    2. Review any credential files, session tokens, or authentication artifacts
+    3. Look for web shells, reverse shells, or backdoors left by previous agents
+    4. Verify current access level and build upon existing foothold
+    5. Avoid disrupting existing access while expanding capabilities
+
+    Your access establishment process should:
+    1. Leverage successful exploits from the exploitation phase
+    2. Implement credential attacks if authentication mechanisms were identified
+    3. Deploy web shells or reverse shells where appropriate
+    4. Test access stability and persistence
+    5. Establish secure communication channels for ongoing operations
+
+    Ensure all access methods are documented for team coordination and maintain
+    operational security throughout the process.
   expected_output: >
-    - Confirmation of access established (e.g., shell upload, credential use) with method specified (from fetch_url, read_file, run_command).
-    - Session or shell details, and any output from executed commands.
+    An access establishment report in Markdown format containing:
+    - **Existing Access Review**: Summary of any current access or sessions found
+    - **Access Method**: Detailed description of how access was achieved
+    - **Credentials Used**: Any usernames, passwords, or keys utilized (redacted appropriately)
+    - **Shell Information**: Type of shell, connection details, and stability assessment
+    - **Access Verification**: Proof of access with system information and command outputs
+    - **Persistence Mechanisms**: Any measures taken to maintain access
+    - **Coordination Notes**: Session details, file locations, and handoff information for subsequent agents
   agent: access_broker
 
 privilege_escalation:
   description: >
-    Escalate privileges using known techniques.
-    Focus on gaining the level of access needed for the mission.
+    Systematically escalate privileges from initial access to the highest level required for mission completion.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before beginning escalation:
+    1. Check current privilege level and existing access capabilities
+    2. Review any enumeration data, SUID lists, or system information already gathered
+    3. Look for credential files, private keys, or escalation tools downloaded by previous agents
+    4. Verify if privilege escalation has already been attempted or achieved
+    5. Build upon existing system knowledge rather than re-enumerating
+
+    Your privilege escalation methodology should include:
+    1. Comprehensive enumeration of the compromised system
+    2. Identification of SUID binaries, vulnerable services, and misconfigurations
+    3. Kernel vulnerability assessment and exploit testing
+    4. Credential harvesting and lateral movement opportunities
+    5. Testing of automated privilege escalation tools and manual techniques
+
+    Document all escalation attempts and maintain detailed logs of system enumeration.
+    Focus on achieving the privilege level necessary for mission objectives.
   expected_output: >
-    - List of files with SUID bit set (from find_vulnerable_suids).
-    - Vulnerabilities or exploits used for escalation (from search_exploit, run_command).
-    - Final privilege level achieved and method used.
+    A privilege escalation report in Markdown format containing:
+    - **Current Access Assessment**: Summary of existing privilege level and access found
+    - **System Enumeration**: Complete system information, users, groups, and configurations
+    - **SUID Analysis**: List of SUID binaries with exploitation potential
+    - **Vulnerability Assessment**: Kernel and service vulnerabilities with exploit availability
+    - **Escalation Attempts**: Detailed log of all privilege escalation attempts
+    - **Final Access Level**: Achieved privilege level with verification commands
+    - **Credential Harvest**: Any additional credentials or access discovered during escalation
+    - **Access Handoff**: Elevated session details and access methods for subsequent agents
   agent: privilege_escalator
 
 file_system_mapping:
   description: >
-    Explore the file system to locate potential flag files or targets specified in the mission.
+    Conduct comprehensive file system exploration to locate mission objectives and sensitive data.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before mapping the filesystem:
+    1. Check for existing file lists, directory structures, or exploration results
+    2. Review any downloaded files, extracted data, or temporary directories created
+    3. Look for find command outputs, file searches, or enumeration scripts already run
+    4. Verify current working directory and available access levels from previous agents
+    5. Build upon existing file system knowledge rather than re-exploring known areas
+
+    Your file system analysis should include:
+    1. Systematic directory traversal starting from accessible locations
+    2. Search for common flag file patterns and naming conventions
+    3. Identification of configuration files, logs, and backup directories
+    4. Analysis of file permissions and ownership for additional access opportunities
+    5. Documentation of file system structure and notable discoveries
+
+    Pay special attention to hidden directories, unusual file locations, and files
+    with suspicious permissions that might contain mission objectives.
   expected_output: >
-    - List of all identified file and directory paths (from list_files).
-    - Confirmation of existence for specific files (from check_file_exists).
-    - Any additional findings from custom shell commands (from run_command).
+    A file system mapping report in Markdown format containing:
+    - **Previous Exploration Review**: Summary of any existing file system data found
+    - **Directory Structure**: Hierarchical overview of accessible file system areas
+    - **Sensitive File Locations**: Configuration files, logs, and potential data repositories
+    - **Flag File Candidates**: Files matching common flag patterns or suspicious characteristics
+    - **Permission Analysis**: Files and directories with unusual permissions or ownership
+    - **Hidden Content**: Dot files, hidden directories, and steganographic possibilities
+    - **Priority Targets**: Ranked list of files most likely to contain mission objectives
+    - **Access Notes**: File paths, permissions, and methods for subsequent agents to access discovered content
   agent: file_mapper
 
 flag_extraction:
   description: >
-    Read contents of suspected flag files and verify.
-    Complete the mission objective by extracting the required data.
+    Locate, extract, and verify all mission objectives including flags, passwords, and target data.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before extracting flags:
+    1. Check for existing flag files, extracted data, or mission objective artifacts
+    2. Review any previous extraction attempts, download logs, or verification results
+    3. Look for partial mission completion, decoded data, or identified target files
+    4. Verify what objectives have already been achieved by previous agents
+    5. Focus efforts on remaining objectives and verification of existing findings
+
+    Your extraction process should:
+    1. Systematically examine all candidate files identified during file system mapping
+    2. Verify file contents against known flag formats and patterns
+    3. Extract and document all discovered objectives with their exact locations
+    4. Perform integrity checks to ensure complete and accurate extraction
+    5. Search for additional hidden or encoded objectives within discovered files
+
+    Ensure complete mission objective fulfillment by cross-referencing findings
+    against original mission requirements and conducting thorough verification.
   expected_output: >
-    - Confirmation of flag file existence (from check_file_exists).
-    - Contents of flag files (from read_file).
-    - Any additional findings from custom shell commands (from run_command).
+    A mission completion report in Markdown format containing:
+    - **Previous Progress Review**: Summary of any existing flags or objectives already found
+    - **Discovered Objectives**: All flags, passwords, and target data with exact values
+    - **File Locations**: Complete paths and access methods for each objective
+    - **Verification Results**: Confirmation of format compliance and integrity checks
+    - **Extraction Methods**: Detailed commands and techniques used for each discovery
+    - **Mission Status**: Clear indication of completion level and any outstanding objectives
+    - **Supporting Evidence**: Command outputs proving successful extraction
+    - **Final Summary**: Complete mission objective status for the manager agent
   agent: flag_hunter
 
 report_writing:
   description: >
-    You are a technical documentation specialist responsible for writing a Markdown report that summarizes the outcome of a cybersecurity mission.
-    Your task is to:
-    1. Ask the manager agent for the following information:
-    - The original mission prompt
-    - The flags or answers discovered
-    - A summary of the crew's approach
-    - Reasoning behind key decisions
-    - Any challenges encountered
-    2. Use that information to generate a Markdown report with the following sections:
-    - Mission Prompt
-    - Flags Found
-    - Approach
-    - Reasoning
-    - Challenges (optional)
-    Format the report clearly using Markdown syntax. Use bullet points, headings, and code blocks where appropriate.
+    Create a comprehensive professional-grade cybersecurity engagement report documenting the complete mission.
+
+    **IMPORTANT: Shared Shell Awareness**
+    You are working in a shared terminal session. Before creating the report:
+    1. Check for existing report files, documentation, or notes from previous agents
+    2. Review terminal history to understand the complete mission timeline
+    3. Look for output files, logs, credentials, and evidence left by all agents
+    4. Gather comprehensive information about the entire engagement from available artifacts
+    5. Coordinate with the manager agent for any missing details or clarifications
+
+    Your reporting process should:
+    1. Gather detailed information from the manager agent about mission outcomes
+    2. Request specific details about the original mission prompt and objectives
+    3. Document the complete methodology and approach taken by the crew
+    4. Analyze the reasoning behind key tactical decisions
+    5. Identify and document any challenges encountered and how they were addressed
+    6. Structure the report for both technical and executive audiences
+
+    Ensure the report meets industry standards for penetration testing documentation
+    and provides clear, actionable insights for stakeholders.
   expected_output: >
-    A Markdown document outlining the mission outcomes. Save it in `mission_report.md`.
+    A professional cybersecurity engagement report saved as `mission_report.md` with the following structure:
+
+    ## Executive Summary
+    - Mission overview and key findings
+    - Risk assessment and business impact
+
+    ## Mission Details
+    - Original mission prompt and scope
+    - Objectives and success criteria
+
+    ## Methodology
+    - Systematic approach taken by the crew
+    - Tools and techniques employed
+    - Phase-by-phase breakdown
+    - Shared shell coordination and workflow
+
+    ## Findings and Results
+    - All discovered flags and objectives
+    - Vulnerabilities identified and exploited
+    - Access levels achieved
+
+    ## Technical Analysis
+    - Detailed exploitation techniques
+    - System compromises and evidence
+    - Privilege escalation methods
+
+    ## Timeline and Coordination
+    - Mission progression and agent handoffs
+    - Shared resource utilization
+    - Collaboration effectiveness
+
+    ## Challenges and Lessons Learned
+    - Obstacles encountered during the engagement
+    - Solutions implemented
+    - Recommendations for future missions
+
+    ## Recommendations
+    - Security improvements for target environment
+    - Remediation priorities
   agent: report_writer
