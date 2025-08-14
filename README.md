@@ -18,25 +18,22 @@ An AI-powered cybersecurity automation framework built with CrewAI that orchestr
 - **Professional Reporting**: Automated generation of industry-standard engagement reports
 - **Safety First**: Built-in command review and safety mechanisms
 
-## Meet the Crew
-
-- **Manager Agent**: Senior operations coordinator ensuring mission success and safety
-- **Recon Specialist**: Advanced network reconnaissance and stealth enumeration
-- **Vulnerability Analyst**: Deep vulnerability research and exploit chain development
-- **Exploit Engineer**: Custom payload crafting and exploitation techniques
-- **Access Broker**: Authentication bypass and initial access establishment
-- **Privilege Escalator**: System privilege elevation and lateral movement
-- **File Mapper**: Digital forensics and file system analysis
-- **Flag Hunter**: Mission objective extraction and verification
-- **Report Writer**: Professional cybersecurity documentation specialist
-
-## Architecture
-
-- **Hierarchical Process**: Manager agent coordinates specialist teams
-- **Shared Context**: Agents build upon each other's discoveries
-- **Tool Integration**: Nmap, Gobuster, Nikto, custom exploit tools
-- **Safety Mechanisms**: Command review prevents destructive operations
-- **Flexible Workflows**: Context-aware task dependencies for complex missions
+<!-- omit from toc -->
+## Table of Contents
+- [Features](#features)
+- [Security Notice](#security-notice)
+  - [Authorized Use Cases](#authorized-use-cases)
+  - [Prohibited Activities](#prohibited-activities)
+  - [User Responsibilities](#user-responsibilities)
+- [Meet the Crew](#meet-the-crew)
+- [Architecture](#architecture)
+- [uv](#uv)
+- [Installing Dependencies](#installing-dependencies)
+- [Configuration](#configuration)
+  - [Custom Tools](#custom-tools)
+- [Safety Features](#safety-features)
+- [Testing, Linting, and Type Checking](#testing-linting-and-type-checking)
+- [License](#license)
 
 ## Security Notice
 
@@ -64,22 +61,25 @@ This tool is designed **exclusively for educational purposes, authorized penetra
 - **Follow Laws**: Comply with all applicable cybersecurity and computer crime laws
 - **Use Responsibly**: Employ this tool only for constructive and legal purposes
 
-<!-- omit from toc -->
-## Table of Contents
-- [Features](#features)
-- [Meet the Crew](#meet-the-crew)
-- [Architecture](#architecture)
-- [Security Notice](#security-notice)
-  - [Authorized Use Cases](#authorized-use-cases)
-  - [Prohibited Activities](#prohibited-activities)
-  - [User Responsibilities](#user-responsibilities)
-- [uv](#uv)
-- [Installing Dependencies](#installing-dependencies)
-- [Configuration](#configuration)
-  - [Custom Tools](#custom-tools)
-- [Safety Features](#safety-features)
-- [Testing, Linting, and Type Checking](#testing-linting-and-type-checking)
-- [License](#license)
+## Meet the Crew
+
+- **Manager Agent**: Senior operations coordinator ensuring mission success and safety
+- **Recon Specialist**: Advanced network reconnaissance and stealth enumeration
+- **Vulnerability Analyst**: Deep vulnerability research and exploit chain development
+- **Exploit Engineer**: Custom payload crafting and exploitation techniques
+- **Access Broker**: Authentication bypass and initial access establishment
+- **Privilege Escalator**: System privilege elevation and lateral movement
+- **File Mapper**: Digital forensics and file system analysis
+- **Flag Hunter**: Mission objective extraction and verification
+- **Report Writer**: Professional cybersecurity documentation specialist
+
+## Architecture
+
+- **Hierarchical Process**: Manager agent coordinates specialist teams
+- **Shared Context**: Agents build upon each other's discoveries
+- **Tool Integration**: Nmap, Gobuster, Nikto, custom exploit tools
+- **Safety Mechanisms**: Command review prevents destructive operations
+- **Flexible Workflows**: Context-aware task dependencies for complex missions
 
 ## uv
 This repository is managed using the `uv` Python project manager: https://docs.astral.sh/uv/
