@@ -183,6 +183,7 @@ class CyberCrew:
             manager_agent=self.manager_agent(),
             max_rpm=12,
             verbose=True,
+            memory=True,
         )
 
     @after_kickoff

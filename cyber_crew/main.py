@@ -13,6 +13,7 @@ from cyber_crew.tools.utils import get_shell, set_global_vars
 logging.basicConfig(format="[*] (%(asctime)s) %(message)s", datefmt="%H:%M:%S", level=logging.INFO)
 logger = logging.getLogger(__name__)
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+os.environ["CREWAI_STORAGE_DIR"] = os.path.join(os.getenv("CYBER_CREW_ROOT_DIR", "."), "storage")
 
 
 def parse_args() -> argparse.Namespace:
