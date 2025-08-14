@@ -34,10 +34,7 @@ class CyberCrew:
     # Agents
     def manager_agent(self) -> Agent:
         """Return the Manager Agent."""
-        return Agent(
-            config=self.agents_config["manager_agent"],
-            verbose=True,
-        )
+        return Agent(config=self.agents_config["manager_agent"], verbose=True, allow_delegation=True)
 
     @agent
     def recon_specialist(self) -> Agent:
@@ -46,6 +43,7 @@ class CyberCrew:
             config=self.agents_config["recon_specialist"],
             tools=[nmap_scan, nikto_scan, gobuster_scan, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -55,6 +53,7 @@ class CyberCrew:
             config=self.agents_config["vulnerability_analyst"],
             tools=[search_exploit, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -64,6 +63,7 @@ class CyberCrew:
             config=self.agents_config["exploit_engineer"],
             tools=[fetch_url, search_exploit, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -73,6 +73,7 @@ class CyberCrew:
             config=self.agents_config["access_broker"],
             tools=[fetch_url, read_file, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -82,6 +83,7 @@ class CyberCrew:
             config=self.agents_config["privilege_escalator"],
             tools=[find_suids, search_exploit, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -91,6 +93,7 @@ class CyberCrew:
             config=self.agents_config["file_mapper"],
             tools=[check_file_exists, list_files, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -100,6 +103,7 @@ class CyberCrew:
             config=self.agents_config["flag_hunter"],
             tools=[check_file_exists, read_file, run_command],
             verbose=True,
+            reasoning=True,
         )
 
     @agent
@@ -108,6 +112,7 @@ class CyberCrew:
         return Agent(
             config=self.agents_config["report_writer"],
             verbose=True,
+            reasoning=True,
         )
 
     # Tasks
